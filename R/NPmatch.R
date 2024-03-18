@@ -13,6 +13,7 @@
 #' 
 #' @examples# Load the example dataset provided and run:
 #' nX <- normalize.log2CPM(X)
+#' nX <- limma::normalizeQuantiles(nX)
 #' cX <- NPmatch(nX)
 #'
 #' @export
