@@ -7,33 +7,36 @@ NPmatch (Nearest-Pair Matching) relies on distance-based matching to determinist
 
 NPmatch is freely available on GitHub. It's a main batch correction algorithm in OmicsPlayground, our Bioinformatics platform at BigOmics Analytics. In OmicsPlayground, you can perform NPmatch without coding needs.
 
-# Installation
+## Installation
 You can install the NPmatch R package with the following steps:
 1. Download NPmatch from https://github.com/bigomics/NPmatch or use "git clone" in the command line;
 2. Enter the directory where NPmatch has been downloaded;
 3. In your terminal, type: "R CMD INSTALL NPmatch" to install NPmatch.
 
-# Usage example
-We provide a basic example on how to use NPmatch to correct batch effects in a biological dataset.
+## Usage example
+We provide a basic example on how to use NPmatch to correct batch effects (BEs) in a biological dataset.
+We use the GSE10846 dataset (Lenz et al., 2008), which include array gene expression profiling on clinical samples from diffuse large B-cell lymphoma (DLBCL) patients pre-treated with the pharmacological regimens CHOP and Rituximab-CHOP. Dataset includes two biological types of DLBCL: 167 ABC and 183 GCB samples. Treatment was performed prior to expression profiling and samples were split in the two treatment groups for processing. Thus, "treatment" represents a batch variable. Using this example dataset we how that while in the uncorrected data BEs appear evident with samples clustering by pharmacological treatment, the BEs are corrected by NPmatch. In the BEs-corrected data the samples clustering by DLBCL type, reflecting their biological heterogeneity.
+
 ``` r
 ## Load NPmatch and limma
 library("NPmatch")
 library("limma")
 
-## X is a matrix of raw data with features in rows and samples in columns.
+## X is the raw data matrix, with features in rows and samples in columns.
 ## Meta is a matrix or a dataframe with the full set of metadata associated with X. 
-## NPmatch requires a vector of phenotype labels per sample.
-## Make sure the order of the phenotype labels matches the order of samples in X (see below).  
-## To assess NPmatch batch correction, you will also need a vector of batch labels (see below).
+## We also need to make sure that the samples in X and Meta are aligned.
+X <- read.table("GSE10846.Expression.txt", sep="\t")
+Meta <- read.table("GSE10846.Metadata.txt", sep="\t")
+dim(X); class(X)
+dim(Meta); class(Meta)
+table(rownames(Meta) == colnames(X))
 
-## Essential checks
-all.equal(rownames(Meta), colnames(X))
-## same: table(rownames(Meta) == colnames(X))
-
-## "pheno" is the column reporting the phenotype labels in the Meta matrix.
-## "batch" is the column reporting the batch labels in the Meta matrix.
-pheno <- Meta[,"pheno"]
-batch <- Meta[,"batch"]
+## To correct batch effects, NPmatch requires a vector of phenotype labels per sample.
+## To assess  batch effect correction, we also need a vector of batch labels (see below).
+## "pheno" is the vector of phenotype labels.
+## "batch" is the vector of batch labels.
+pheno <- Meta[,"dlbcl.type"]
+batch <- Meta[,"Chemotherapy"]
 
 ## Intra-sample normalization of the raw gene expression matrix with counts-per-million (CPM)
 ## You can use the normalize.log2CPM.R function provided
@@ -83,7 +86,7 @@ legend("bottomleft",
 grid(lwd = 1.5)
 ```
 
-# Support
+### Support
 For support feel free to reach our Bioinformatics Data Science Team at BigOmics Analytics:
 
 Antonino Zito, PhD:  antonino.zito@bigomics.ch
