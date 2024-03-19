@@ -5,26 +5,26 @@ Batch effects (BEs) are a predominant source of noise in omics data and often ma
 
 NPmatch (Nearest-Pair Matching) relies on distance-based matching to deterministically search for nearest neighbors with opposite labels, so-called “nearest-pair”, among samples. NPmatch requires knowledge of the phenotypes but not of the batch assignment. Differently to many other algorithms, NPmatch does not rely on specific models or underlying distribution. It does not require special experimental designs, randomized controlled experiments, control genes or batch information. NPmatch is based on the simple rationale that samples sharing a biological state (e.g., phenotype, condition) should empirically pair based on distance in biological profiles, such as transcriptomics profiles.
 
-NPmatch is freely available here on GitHub. It's a main batch correction algorithm available in OmicsPlayground, our Bioinformatic platform at BigOmics Analytics. In OmicsPlayground, you can perform NPmatch without coding.
+NPmatch is freely available here on GitHub. It's a main batch correction algorithm available in OmicsPlayground, our Bioinformatic platform at BigOmics Analytics. In OmicsPlayground, you can perform NPmatch without coding needs.
 
 # Installation
-You can install NPmatch with the following steps:
-1. Download the NPmatch package from https://github.com/bigomics/NPmatch or use "git clone" in the command line;
+You can install the NPmatch R package with the following steps:
+1. Download NPmatch from https://github.com/bigomics/NPmatch or use "git clone" in the command line;
 2. Enter the directory where NPmatch has been downloaded;
-3. In your terminal, type: "R CMD INSTALL NPmatch" to install the R package.
+3. In your terminal, type: "R CMD INSTALL NPmatch" to install NPmatch.
 
 # Usage example
-Here we provide a basic example on how to use NPmatch to correct batch effects in a biological dataset (e.g., RNA-seq data)
+We provide a basic example on how to use NPmatch to correct batch effects in a biological dataset.
 ``` r
-## Load NPmatch source code and other needed libraries
+## Load NPmatch and limma
 library("NPmatch")
 library("limma")
 
 ## X is a matrix of raw data with features in rows and samples in columns.
 ## Meta is a matrix or a dataframe with the full set of metadata associated with X. 
-## NPmatch requires the phenotype vector, that is a vector of phenotype labels per sample.
-## Please make sure the order of the phenotype labels exactly matches the order of samples in X (see below).  
-## To assess NPmatch batch effect correction, you will also need a vector with batch information (see below).
+## NPmatch requires a phenotype vector, i.e., a vector of phenotype labels per sample.
+## Make sure the order of the phenotype labels matches the order of samples in X (see below).  
+## To assess NPmatch batch effect correction, you will also need a vector of batch labels (see below).
 
 ## Essential checks
 all.equal(rownames(Meta), colnames(X))
@@ -84,6 +84,8 @@ grid(lwd = 1.5)
 ```
 
 # Support
-For support, please contact our Bioinformatics Data Science Team at BigOmics Analytics:
+For support feel free to reach our Bioinformatics Data Science Team at BigOmics Analytics:
+
 Antonino Zito, PhD:  antonino.zito@bigomics.ch;
+
 Ivo Kwee, PhD: ivo.kwee@bigomics.ch;
