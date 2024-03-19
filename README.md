@@ -5,7 +5,7 @@ Batch effects (BEs) are a predominant source of noise in omics data and often ma
 
 NPmatch (Nearest-Pair Matching) relies on distance-based matching to deterministically search for nearest neighbors with opposite labels, so-called “nearest-pair”, among samples. NPmatch requires knowledge of the phenotypes but not of the batch assignment. Differently to many other algorithms, NPmatch does not rely on specific models or underlying distribution. It does not require special experimental designs, randomized controlled experiments, control genes or batch information. NPmatch is based on the simple rationale that samples sharing a biological state (e.g., phenotype, condition) should empirically pair based on distance in biological profiles, such as transcriptomics profiles.
 
-NPmatch is freely available here on GitHub. It's a main batch correction algorithm available in OmicsPlayground, our Bioinformatic platform at BigOmics Analytics. In OmicsPlayground, you can perform NPmatch without coding needs.
+NPmatch is freely available on GitHub. It's a main batch correction algorithm in OmicsPlayground, our Bioinformatics platform at BigOmics Analytics. In OmicsPlayground, you can perform NPmatch without coding needs.
 
 # Installation
 You can install the NPmatch R package with the following steps:
@@ -22,9 +22,9 @@ library("limma")
 
 ## X is a matrix of raw data with features in rows and samples in columns.
 ## Meta is a matrix or a dataframe with the full set of metadata associated with X. 
-## NPmatch requires a phenotype vector, i.e., a vector of phenotype labels per sample.
+## NPmatch requires a vector of phenotype labels per sample.
 ## Make sure the order of the phenotype labels matches the order of samples in X (see below).  
-## To assess NPmatch batch effect correction, you will also need a vector of batch labels (see below).
+## To assess NPmatch batch correction, you will also need a vector of batch labels (see below).
 
 ## Essential checks
 all.equal(rownames(Meta), colnames(X))
@@ -86,6 +86,6 @@ grid(lwd = 1.5)
 # Support
 For support feel free to reach our Bioinformatics Data Science Team at BigOmics Analytics:
 
-Antonino Zito, PhD:  antonino.zito@bigomics.ch;
+Antonino Zito, PhD:  antonino.zito@bigomics.ch
 
-Ivo Kwee, PhD: ivo.kwee@bigomics.ch;
+Ivo Kwee, PhD: ivo.kwee@bigomics.ch
