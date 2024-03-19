@@ -4,9 +4,10 @@ Version: 0.1.0
 Authors@R: c(
     person("Ivo", "Kwee", , "kwee@bigomics.ch", role = "aut",
            comment = c(ORCID = "0000-0002-2751-4218")),
-    person("Antonino", "Zito", , "antonino.zito@bigomics.ch", role = "cre")
+    person("Antonino", "Zito", , "antonino.zito@bigomics.ch", role = "aut",
+           comment = c(ORCID = "0000-0003-1931-984X"))
   )
-Description: 'NPmatch' (Nereast Pair matching) achieves batch effects correction in omics data by performing distance-based matching to deterministically search, for each sample, the nearest k neighbors with opposite phenotype group label (so called 'nearest-pair'). NPmatch enables full dataset matching: all available samples are matched to k samples in the other phenotype group(s). No samples are dropped or removed from the datasets. NPmatch requires knowledge of the phenotypes but not of the batch assignment. The output is a matrix free of unwanted effects (i.e., batch-related variables) and so suitable for further analyses.
+Description: 'NPmatch' (Nereast Pair matching) achieves batch effects correction in omics data by performing distance-based matching. For each sample, NPmatch performs a search of the the nearest k neighbors with opposite phenotype group label -so called 'nearest-pair'. NPmatch enables full dataset matching: all available samples are matched to k samples in the other phenotype group(s). No samples are dropped or removed from the datasets. NPmatch requires knowledge of the phenotypes but not of the batch assignment. The output is a batch-corrected dataset suitable for further analyses.
 License: GPL (>= 3)
 URL: https://github.com/bigomics/NPmatch
 BugReports: https://github.com/bigomics/NPmatch/issues
