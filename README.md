@@ -22,24 +22,24 @@ We use the GSE10846 dataset (Lenz et al., 2008), which includes array gene expre
 library("NPmatch")
 library("limma")
 
-## X is the raw data matrix, with features in rows and samples in columns.
-## Meta is a matrix or a dataframe with the full set of metadata associated with X. 
-## We also need to make sure that the samples in X and Meta are aligned.
+## X: raw data matrix, with features in rows and samples in columns.
+## Meta: matrix or dataframe with the metadata associated with X. 
+## We need to ensure that the samples in X and Meta are aligned.
 X <- read.table("./data/GSE10846.Expression.txt", sep="\t")
 Meta <- read.table("./data/GSE10846.Metadata.txt", sep="\t")
 dim(X); class(X)
 dim(Meta); class(Meta)
 table(rownames(Meta) == colnames(X))
 
-## To correct batch effects, NPmatch requires a vector of phenotype labels per sample.
-## To assess  batch effect correction, we also need a vector of batch labels (see below).
-## "pheno" is the vector of phenotype labels.
-## "batch" is the vector of batch labels.
+## To correct BEs, NPmatch requires a vector of phenotype labels per sample.
+## To assess  BE correction, we will also need a vector of batch labels (see below).
+## "pheno": phenotype labels.
+## "batch": batch labels.
 pheno <- Meta[,"dlbcl.type"]
 batch <- Meta[,"Chemotherapy"]
 
-## Intra-sample normalization of the raw gene expression matrix with counts-per-million (CPM)
-## You can use the normalize.log2CPM.R function provided
+## Intra-sample normalization of the raw data.
+## We use the normalize.log2CPM.R function provided
 nX <- normalize.log2CPM(X)
 
 ## Inter-sample normalization by quantile normalization
@@ -49,8 +49,7 @@ nX <- limma::normalizeQuantiles(nX)
 cX <- NPmatch(X=nX, y=pheno, dist.method="cor", sdtop=5000)
 table(rownames(Meta) == colnames(cX))
 
-## Check batch effects in the raw and batch-corrected data by UMAP or t-SNE
-## For convenience, we put X and cX in a list and implement a for loop.
+## Check BEs in the raw and batch-corrected data by UMAP or t-SNE
 LL <- list(X, cX)
 names(LL) <- c("Uncorrected", "Batch-corrected")
 Var <- c("Batch", "Pheno")
@@ -64,8 +63,7 @@ for(i in 1:length(LL)) {
       # pos <- Rtsne::Rtsne(t(LL[[i]]), perplexity=nb)$Y
       pos <- uwot::tumap(t(LL[[i]]), n_neighbors = max(2, nb)) 
       
-      pos <- data.frame(Dim1=pos[,1], Dim2=pos[,2], 
-                        Pheno=pheno, Batch=batch)
+      pos <- data.frame(Dim1=pos[,1], Dim2=pos[,2], Pheno=pheno, Batch=batch)
       table(rownames(pos) == colnames(cX))
       pos[,1:2] <- apply(pos[,1:2], 2, function(x) as.numeric(x))
       pos$Col.Pheno <- as.numeric(factor(pos$Pheno))
