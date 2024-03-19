@@ -25,8 +25,8 @@ library("limma")
 ## X is the raw data matrix, with features in rows and samples in columns.
 ## Meta is a matrix or a dataframe with the full set of metadata associated with X. 
 ## We also need to make sure that the samples in X and Meta are aligned.
-X <- read.table("GSE10846.Expression.txt", sep="\t")
-Meta <- read.table("GSE10846.Metadata.txt", sep="\t")
+X <- read.table("./data/GSE10846.Expression.txt", sep="\t")
+Meta <- read.table("./data/GSE10846.Metadata.txt", sep="\t")
 dim(X); class(X)
 dim(Meta); class(Meta)
 table(rownames(Meta) == colnames(X))
@@ -49,41 +49,59 @@ nX <- limma::normalizeQuantiles(nX)
 cX <- NPmatch(X=nX, y=pheno, dist.method="cor", sdtop=5000)
 table(rownames(Meta) == colnames(cX))
 
-## Check batch effects by plotting UMAP or t-SNE coordinates
-nb <- max(1, min(30, round(ncol(cX) / 5)))
-# pos <- Rtsne::Rtsne(t(cX), perplexity=nb)$Y ## t-SNE
-pos <- uwot::tumap(t(cX), n_neighbors = max(2, nb)) 
-pos <- data.frame(Dim1=pos[,1], Dim2=pos[,2], Pheno=pheno, Batch=batch)
-rownames(pos) <- colnames(cX)
-pos[,1:2] <- apply(pos[,1:2], 2, function(x) as.numeric(x))
-pos$Col <- as.numeric(factor(pos$Pheno))
+## Check batch effects in the raw and batch-corrected data by UMAP or t-SNE
+## For convenience, we put X and cX in a list and implement a for loop.
+LL <- list(X, cX)
+names(LL) <- c("Uncorrected", "Batch-corrected")
+Var <- c("Batch", "Pheno")
 
-## Plot
-plot(pos$Dim1,
-     pos$Dim2,
-     xlab = "Dim1", 
-     ylab = "Dim2",
-     col = pos$Col,
-     pch = 18, 
-     cex = 1.8, 
-     cex.lab = 2,
-     cex.axis = 2,
-     las = 1, 
-     tcl = -0.1,
-     mgp = c(1.5,0.5,0))
-
-mtext("NPmatch batch-corrected data",
-      font = 2,
-      adj = 0.5,
-      cex = 1)
-
-legend("bottomleft",
-       unique(pos$Pheno),
-       cex = 1.5,
-       fill = unique(pos$Col),
-       col = unique(pos$Col))
-
-grid(lwd = 1.5)
+x11(width = 10, height = 10)
+par(mfrow = c(2,2))
+i=1
+for(i in 1:length(LL)) {
+     
+      nb <- max(1, min(30, round(ncol(LL[[i]]) / 5)))
+      # pos <- Rtsne::Rtsne(t(LL[[i]]), perplexity=nb)$Y
+      pos <- uwot::tumap(t(LL[[i]]), n_neighbors = max(2, nb)) 
+      
+      pos <- data.frame(Dim1=pos[,1], Dim2=pos[,2], 
+                        Pheno=pheno, Batch=batch)
+      table(rownames(pos) == colnames(cX))
+      pos[,1:2] <- apply(pos[,1:2], 2, function(x) as.numeric(x))
+      pos$Col.Pheno <- as.numeric(factor(pos$Pheno))
+      pos$Col.Batch <- as.numeric(factor(pos$Batch))
+        
+      v=1
+      for(v in 1:length(Var)) {
+            Col <- pos[,paste0("Col.",Var[v])]
+            plot(pos$Dim1,
+                 pos$Dim2,
+                 col = Col,
+                 xlab = "Dim1", 
+                 ylab = "Dim2",
+                 pch = 18, 
+                 cex = 0.8, 
+                 cex.lab = 1.3,
+                 cex.axis = 1.3,
+                 las = 1, 
+                 tcl = -0.1,
+                 mgp = c(1.5,0.5,0))
+            
+            mtext(names(LL)[i], 
+                  font = 2,
+                  adj = 0.5, 
+                  cex = 1)
+    
+            legend("bottomleft",
+                   unique(pos[,Var[v]]),
+                   cex = 1,
+                   bty = "n",
+                   fill = unique(Col),
+                   col = unique(Col))
+    
+            grid(lwd = 1.2)
+       }
+}
 ```
 
 ### Support
