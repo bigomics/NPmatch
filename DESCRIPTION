@@ -2,7 +2,7 @@ Package: NPmatch
 Title: Latent Batch Effect Correction of Omics data by Nearest-Pair Matching
 Version: 0.1.0
 Authors@R: c(
-    person("Ivo", "Kwee", , "kwee@bigomics.ch", role = "aut",
+    person("Ivo", "Kwee", , "kwee@bigomics.ch", role = "cre",
            comment = c(ORCID = "0000-0002-2751-4218")),
     person("Antonino", "Zito", , "antonino.zito@bigomics.ch", role = "aut",
            comment = c(ORCID = "0000-0003-1931-984X"))
