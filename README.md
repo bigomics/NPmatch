@@ -15,7 +15,7 @@ You can install the NPmatch R package with the following steps:
 
 ## Usage example
 We provide a basic example on how to use NPmatch to correct batch effects (BEs) in a biological dataset.
-We use the GSE10846 dataset (Lenz et al., 2008), which include array gene expression profiling on clinical samples from diffuse large B-cell lymphoma (DLBCL) patients pre-treated with the pharmacological regimens CHOP and Rituximab-CHOP. Dataset includes two biological types of DLBCL: 167 ABC and 183 GCB samples. Treatment was performed prior to expression profiling and samples were split in the two treatment groups for processing. Thus, "treatment" represents a batch variable. We show that BEs in the uncorrected data appear evident with samples clustering by pharmacological treatment. Following NPmatch batch correction, the samples cluster by DLBCL type, reflecting their biological heterogeneity.
+We use the GSE10846 dataset (Lenz et al., 2008), which includes array gene expression profiling data from diffuse large B-cell lymphoma (DLBCL) samples from patients pre-treated with the pharmacological regimens CHOP and Rituximab-CHOP. Dataset includes two biological types of DLBCL: ABC and GCB. Because treatment was performed prior to expression profiling and samples were split in the two treatment groups, "treatment" represents a batch variable. We show that BEs in the uncorrected data appear evident with samples clustering by treatment. Following NPmatch batch correction, the samples cluster by DLBCL type, reflecting their biological heterogeneity.
 
 ``` r
 ## Load NPmatch and limma
