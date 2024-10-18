@@ -1,17 +1,17 @@
-# NPmatch
+# NPM
 Latent Batch Effect Correction of Omics data by Nearest-Pair Matching
 
-Batch effects (BEs) are a predominant source of noise in omics data and often mask real biological signals. BEs remain common in existing datasets. Current methods for BE correction mostly rely on specific assumptions or complex models, and may not detect and adjust BEs adequately, impacting downstream analysis and discovery power. To address these challenges we developed NPmatch, a nearest-neighbor matching-based method that adjusts BEs satisfactorily and outperforms current methods in a wide range of datasets.
+Batch effects (BEs) are a predominant source of noise in omics data and often mask real biological signals. BEs remain common in existing datasets. Current methods for BE correction mostly rely on specific assumptions or complex models, and may not detect and adjust BEs adequately, impacting downstream analysis and discovery power. To address these challenges we developed NPM, a nearest-neighbor matching-based method that adjusts BEs satisfactorily and outperforms current methods in a wide range of datasets.
 
-NPmatch (Nearest-Pair Matching) relies on distance-based matching to deterministically search for nearest neighbors with opposite labels, so-called “nearest-pair”, among samples. NPmatch requires knowledge of the phenotypes but not of the batch assignment. Differently to many other algorithms, NPmatch does not rely on specific models or underlying distribution. It does not require special experimental designs, randomized controlled experiments, control genes or batch information. NPmatch is based on the simple rationale that samples sharing a biological state (e.g., phenotype, condition) should empirically pair based on distance in biological profiles, such as transcriptomics profiles.
+NPM (Nearest-Pair Matching) relies on distance-based matching to deterministically search for nearest neighbors with opposite labels, so-called “nearest-pair”, among samples. NPM requires knowledge of the phenotypes but not of the batch assignment. Differently to many other algorithms, NPM does not rely on specific models or underlying distribution. It does not require special experimental designs, randomized controlled experiments, control genes or batch information. NPM is based on the simple rationale that samples sharing a biological state (e.g., phenotype, condition) should empirically pair based on distance in biological profiles, such as transcriptomics profiles.
 
-NPmatch is freely available on GitHub. It's a main batch correction algorithm in OmicsPlayground, our Bioinformatics platform at BigOmics Analytics. In OmicsPlayground, you can perform NPmatch without coding needs.
+NPM is freely available on GitHub. It's a main batch correction algorithm in OmicsPlayground, our Bioinformatics platform at BigOmics Analytics. In OmicsPlayground, you can perform NPM without coding needs.
 
 ## Installation
-You can install the NPmatch R package with the following steps:
+You can install the NPM R package with the following steps:
 1. Download NPmatch from https://github.com/bigomics/NPmatch or use "git clone" in the command line;
-2. Enter the directory where NPmatch has been downloaded;
-3. In your terminal, type: "R CMD INSTALL NPmatch" to install NPmatch.
+2. Enter the directory where NPM has been downloaded;
+3. In your terminal, type: "R CMD INSTALL NPmatch" to install NPM.
 
 ## Usage example
 We provide a basic example on how to use NPmatch to correct batch effects (BEs) in a biological dataset.
