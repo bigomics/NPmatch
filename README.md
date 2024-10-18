@@ -9,9 +9,9 @@ NPM is freely available on GitHub. It's a main batch correction algorithm in Omi
 
 ## Installation
 You can install the NPM R package with the following steps:
-1. Download NPmatch from https://github.com/bigomics/NPmatch or use "git clone" in the command line;
+1. Download NPmatch from https://github.com/bigomics/NPM or use "git clone" in the command line;
 2. Enter the directory where NPM has been downloaded;
-3. In your terminal, type: "R CMD INSTALL NPmatch" to install NPM.
+3. In your terminal, type: "R CMD INSTALL NPM" to install NPM.
 
 ## Usage example
 We provide a basic example on how to use NPmatch to correct batch effects (BEs) in a biological dataset.
